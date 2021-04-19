@@ -3,7 +3,7 @@ const sql = require("./db.js");
 
 const Island = function(island) {
     this.island_id = island.island_id;
-    this.room_id = room.room_id;
+    this.room_id = island.room_id;
 };
 
 Island.create = (newIsland, result) =>{
