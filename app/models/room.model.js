@@ -2,7 +2,6 @@ const sql = require("./db.js");
 
 
 const Room = function(room) {
-    this.room_id =  room.room_id;
     this.room_name = room.room_name;
 };
 
@@ -13,9 +12,10 @@ Room.create = (newRoom, result) =>{
           result(err, null);
           return;
 }
+console.log("created room: ", { id: res.insertId, ...newRoom });
+result(null, { id: res.insertId, ...newRoom });
+});
 
-console.log("something");
-  });
 };
 
 Room.findById = (room_id, result) => {
@@ -37,7 +37,7 @@ Room.findById = (room_id, result) => {
     });
   };
 
- Room.getAll = result => {
+    Room.getAll = result => {
     sql.query("SELECT * FROM room", (err, res) => {
       if (err) {
         console.log("error: ", err);
@@ -68,3 +68,5 @@ Room.findById = (room_id, result) => {
       result(null, res);
     });
   };
+  
+  module.exports = Room;

@@ -1,6 +1,8 @@
 module.exports = {
     HOST: "localhost",
     USER: "root",
-    PASSWORD: "root",
-    DB: "maapi_db"
+    PASSWORD: "admin",
+    DB: "test_api1"
   };
+
+  

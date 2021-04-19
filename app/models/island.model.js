@@ -1,7 +1,7 @@
 const sql = require("./db.js");
 
 
-const Island = function(Island) {
+const Island = function(island) {
     this.island_id = island.island_id;
     this.room_id = room.room_id;
 };
@@ -68,3 +68,4 @@ Island.findById = (Island_id, result) => {
       result(null, res);
     });
   };
+  module.exports = Island;

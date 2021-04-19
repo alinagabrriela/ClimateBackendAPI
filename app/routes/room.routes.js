@@ -18,4 +18,5 @@ module.exports = app => {
   
     // Create a new Customer
     app.delete("/room", room.deleteAll);
-  };
+
+};
