@@ -82,6 +82,7 @@ exports.update = (req, res) => {
       }
     );
   };
+  
 // Delete a Room with the specified RoomId in the request
 exports.delete = (req, res) => {
     Room.remove(req.params.room_id, (err, data) => {
@@ -98,6 +99,7 @@ exports.delete = (req, res) => {
       } else res.send({ message: `Room was deleted successfully!` });
     });
   };
+
 // Delete all Rooms from the database.
 exports.deleteAll = (req, res) => {
     Room.removeAll((err, data) => {
