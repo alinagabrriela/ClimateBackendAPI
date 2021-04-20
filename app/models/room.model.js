@@ -37,6 +37,9 @@ Room.findById = (room_id, result) => {
     });
   };
 
+
+ 
+
     Room.getAll = result => {
     sql.query("SELECT * FROM room", (err, res) => {
       if (err) {
@@ -49,6 +52,30 @@ Room.findById = (room_id, result) => {
       result(null, res);
     });
   };
+
+  Room.updateById = (room_id, room, result) => {
+    sql.query(
+      "UPDATE room SET room_name = ? WHERE room_id = ?",
+      [room.room_name, room_id],
+      (err, res) => {
+        if (err) {
+          console.log("error: ", err);
+          result(null, err);
+          return;
+        }
+  
+        if (res.affectedRows == 0) {
+          // not found Customer with the id
+          result({ kind: "not_found" }, null);
+          return;
+        }
+  
+        console.log("updated customer: ", { room_id: room_id, ...room });
+        result(null, { room_id: room_id, ...room });
+      }
+    );
+  };
+
 
   Room.remove = (room_id, result) => {
     sql.query("DELETE FROM room WHERE room_id = ?", room_id, (err, res) => {

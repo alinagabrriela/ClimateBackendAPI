@@ -1,8 +1,8 @@
 module.exports = {
     HOST: "localhost",
     USER: "root",
-    PASSWORD: "Chocolate321",
-    DB: "test_api_1",
+    PASSWORD: "admin",
+    DB: "test_api1",
   };
 
   

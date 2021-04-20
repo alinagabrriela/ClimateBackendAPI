@@ -83,6 +83,7 @@ exports.update = (req, res) => {
     );
   };
   
+  
 // Delete a Room with the specified RoomId in the request
 exports.delete = (req, res) => {
     Room.remove(req.params.room_id, (err, data) => {
