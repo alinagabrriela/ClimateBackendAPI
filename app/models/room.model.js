@@ -18,6 +18,29 @@ result(null, { id: res.insertId, ...newRoom });
 
 };
 
+Room.put = (room_id, room, result) => {
+  sql.query(
+    "UPDATE room SET room_name = ? WHERE room_id = ?",
+    [room_id, room.room_name],
+    (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+        return;
+      }
+
+      if (res.affectedRows == 0) {
+        // not found room with the id
+        result({ kind: "not_found" }, null);
+        return;
+      }
+
+      console.log("updated room: ", { id: room_id, ...room });
+      result(null, {id: room_id, ...room });
+    }
+  );
+};
+
 Room.findById = (room_id, result) => {
     sql.query(`SELECT * FROM room WHERE room_id = ${room_id}`, (err, res) => {
       if (err) {

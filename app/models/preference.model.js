@@ -55,7 +55,7 @@ Preference.findById = (preference_id, result) => {
   };
 
   Preference.remove = (preference_id, result) => {
-    sql.query("DELETE FROM preference WHERE id = ?", preference_id, (err, res) => {
+    sql.query("DELETE FROM preference WHERE preference_id = ?", preference_id, (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);
@@ -69,6 +69,19 @@ Preference.findById = (preference_id, result) => {
       }
   
       console.log("deleted preference with id: ", preference_id);
+      result(null, res);
+    });
+  };
+
+  Preference.removeAll = result => {
+    sql.query("DELETE FROM preference", (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+        return;
+      }
+  
+      console.log(`deleted ${res.affectedRows} preference`);
       result(null, res);
     });
   };

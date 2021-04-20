@@ -51,7 +51,7 @@ Island.findById = (Island_id, result) => {
   };
 
   Island.remove = (Island_id, result) => {
-    sql.query("DELETE FROM Island WHERE id = ?", Island_id, (err, res) => {
+    sql.query("DELETE FROM Island WHERE Island_id = ?", Island_id, (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);
@@ -68,4 +68,19 @@ Island.findById = (Island_id, result) => {
       result(null, res);
     });
   };
+
+  Island.removeAll = result => {
+    sql.query("DELETE FROM island", (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+        return;
+      }
+  
+      console.log(`deleted ${res.affectedRows} island`);
+      result(null, res);
+    });
+  };
+
+
   module.exports = Island;

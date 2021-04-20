@@ -64,7 +64,7 @@ exports.update = (req, res) => {
       });
     }
   
-    Room.updateById(
+    Room.put(
       req.params.room_id,
       new Room(req.body),
       (err, data) => {

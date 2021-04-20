@@ -9,7 +9,7 @@ exports.create = (req, res) => {
       });
     }
   
-    // Create a Room
+    // Create an Island
     const island = new Island({
       island_id: req.body.island_id,
       room_id: req.body.room_id,
@@ -38,6 +38,7 @@ exports.findAll = (req, res) => {
       else res.send(data);
     });
   };
+
 // Find a single Room with a RoomId
 exports.findOne = (req, res) => {
     Island.findById(req.params.island_id, (err, data) => {
@@ -82,7 +83,8 @@ exports.update = (req, res) => {
       }
     );
   };
-// Delete a Room with the specified RoomId in the request
+
+// Delete a Island with the specified RoomId in the request
 exports.delete = (req, res) => {
     Island.remove(req.params.island_id, (err, data) => {
       if (err) {
@@ -98,7 +100,7 @@ exports.delete = (req, res) => {
       } else res.send({ message: `Island was deleted successfully!` });
     });
   };
-// Delete all Rooms from the database.
+// Delete all Islands from the database.
 exports.deleteAll = (req, res) => {
     Island.removeAll((err, data) => {
       if (err)
