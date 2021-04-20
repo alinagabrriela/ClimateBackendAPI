@@ -18,8 +18,8 @@ console.log("something");
   });
 };
 
-Island.findById = (Island_id, result) => {
-    sql.query(`SELECT * FROM Island WHERE Island_id = ${Island_id}`, (err, res) => {
+Island.findById = (island_id, result) => {
+    sql.query(`SELECT * FROM Island WHERE Island_id = ${island_id}`, (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(err, null);
@@ -37,6 +37,29 @@ Island.findById = (Island_id, result) => {
     });
   };
 
+  Island.updateById = (island_id, island, result) => {
+    sql.query(
+      "UPDATE island SET island_id = ? WHERE island_id = ?",
+      [island.island_id, island.room_id],
+      (err, res) => {
+        if (err) {
+          console.log("error: ", err);
+          result(null, err);
+          return;
+        }
+  
+        if (res.affectedRows == 0) {
+          // not found Customer with the id
+          result({ kind: "not_found" }, null);
+          return;
+        }
+  
+        console.log("updated island: ", { island_id: island_id, ...island });
+        result(null, { island_id: island_id, ...island });
+      }
+    );
+  };
+
  Island.getAll = result => {
     sql.query("SELECT * FROM Island", (err, res) => {
       if (err) {
@@ -50,8 +73,8 @@ Island.findById = (Island_id, result) => {
     });
   };
 
-  Island.remove = (Island_id, result) => {
-    sql.query("DELETE FROM Island WHERE id = ?", Island_id, (err, res) => {
+  Island.remove = (island_id, result) => {
+    sql.query("DELETE FROM Island WHERE id = ?", island_id, (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);
@@ -64,8 +87,21 @@ Island.findById = (Island_id, result) => {
         return;
       }
   
-      console.log("deleted Island with id: ", Island_id);
+      console.log("deleted Island with id: ", island_id);
       result(null, res);
     });
   };
+  Island.removeAll = result => {
+    sql.query("DELETE FROM island", (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+        return;
+      }
+  
+      console.log(`deleted ${res.affectedRows} island`);
+      result(null, res);
+    });
+  };
+    
   module.exports = Island;
