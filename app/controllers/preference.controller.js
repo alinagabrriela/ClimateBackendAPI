@@ -10,7 +10,7 @@ exports.create = (req, res) => {
     }
   
     // Create a Room
-    const preference = new Preferece({
+    const preference = new Preference({
       preference_id: req.body.preference_id,
       island_id: req.body.island_id,
       ptype: req.body.ptype,

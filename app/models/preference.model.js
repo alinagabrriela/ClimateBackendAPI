@@ -2,6 +2,7 @@ const sql = require("./db.js");
 
 
 const Preference = function(preference) {
+    this.preference_id = preference.preference_id;
     this.island_id = preference.island_id;
     this.ptype = preference.ptype;
     this.temperature = preference.temperature;
@@ -41,6 +42,30 @@ Preference.findById = (preference_id, result) => {
     });
   };
 
+  Preference.updateById = (preference_id, preference, result) => {
+    sql.query(
+      "UPDATE preference SET ptype = ?, temperature = ?, humidity = ?, fanspeed = ? WHERE preference_id = ?",
+      [preference.ptype, preference.temperature, preference.humidity, preference.fanspeed, preference_id],
+      (err, res) => {
+        if (err) {
+          console.log("error: ", err);
+          result(null, err);
+          return;
+        }
+  
+        if (res.affectedRows == 0) {
+         
+          result({ kind: "not_found" }, null);
+          return;
+        }
+  
+        console.log("updated preference: ", { preference_id: preference_id, ...preference});
+        result(null, { preference_id: preference_id, ...preference });
+      }
+    );
+  };
+
+
     Preference.getAll = result => {
     sql.query("SELECT * FROM preference", (err, res) => {
       if (err) {
@@ -55,7 +80,7 @@ Preference.findById = (preference_id, result) => {
   };
 
   Preference.remove = (preference_id, result) => {
-    sql.query("DELETE FROM preference WHERE id = ?", preference_id, (err, res) => {
+    sql.query("DELETE FROM preference WHERE preference_id = ?", preference_id, (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);
@@ -69,6 +94,19 @@ Preference.findById = (preference_id, result) => {
       }
   
       console.log("deleted preference with id: ", preference_id);
+      result(null, res);
+    });
+  };
+
+  Preference.removeAll = result => {
+    sql.query("DELETE FROM preference", (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+        return;
+      }
+  
+      console.log(`deleted ${res.affectedRows} preference`);
       result(null, res);
     });
   };

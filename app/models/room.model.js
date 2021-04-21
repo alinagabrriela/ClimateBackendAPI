@@ -70,7 +70,7 @@ Room.findById = (room_id, result) => {
           return;
         }
   
-        console.log("updated customer: ", { room_id: room_id, ...room });
+        console.log("updated room: ", { room_id: room_id, ...room });
         result(null, { room_id: room_id, ...room });
       }
     );
