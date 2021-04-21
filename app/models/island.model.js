@@ -3,7 +3,7 @@ const sql = require("./db.js");
 
 const Island = function(island) {
     this.island_id = island.island_id;
-    this.room_id = room.room_id;
+    this.room_id = island.room_id;
 };
 
 Island.create = (newIsland, result) =>{
@@ -18,8 +18,8 @@ console.log("something");
   });
 };
 
-Island.findById = (Island_id, result) => {
-    sql.query(`SELECT * FROM Island WHERE Island_id = ${Island_id}`, (err, res) => {
+Island.findById = (island_id, result) => {
+    sql.query(`SELECT * FROM Island WHERE Island_id = ${island_id}`, (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(err, null);
@@ -37,7 +37,7 @@ Island.findById = (Island_id, result) => {
     });
   };
 
- Island.getAll = result => {
+  Island.getAll = result => {
     sql.query("SELECT * FROM Island", (err, res) => {
       if (err) {
         console.log("error: ", err);
@@ -50,8 +50,8 @@ Island.findById = (Island_id, result) => {
     });
   };
 
-  Island.remove = (Island_id, result) => {
-    sql.query("DELETE FROM Island WHERE id = ?", Island_id, (err, res) => {
+  Island.remove = (island_id, result) => {
+    sql.query("DELETE FROM Island WHERE island_id = ?", island_id, (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);
@@ -64,8 +64,22 @@ Island.findById = (Island_id, result) => {
         return;
       }
   
-      console.log("deleted Island with id: ", Island_id);
+      console.log("deleted Island with island_id: ", island_id);
       result(null, res);
     });
   };
+
+  Island.removeAll = result => {
+    sql.query("DELETE FROM island", (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+        return;
+      }
+  
+      console.log(`deleted ${res.affectedRows} island`);
+      result(null, res);
+    });
+  };
+    
   module.exports = Island;
